@@ -66,6 +66,13 @@ public partial class memory
         return result;
     }
 
+    public static void FREEZEVALUE(string address, string type, string value) => mem.FreezeValue(address, type, value);
+    public static void UNFREEZEVALUE(string address) => mem.UnfreezeValue(address);
+    public static bool WRITEMEMORY(string address, string type, string value) => mem.WriteMemory(address, type, value);
+    public static int READINT(string address) => mem.ReadInt(address);
+    public static float READFLOAT(string address) => mem.ReadFloat(address);
+    public static string READSTRING(string address) => mem.ReadString(address);
+
     #region Process
 
     public Process Process { get; set; }
