@@ -6,6 +6,8 @@ using System.Text;
 
 public partial class memory
 {
+    public static memory mem = new memory();
+    
     public enum InitializeResult
     {
         Memeory_Successfully,
@@ -30,6 +32,38 @@ public partial class memory
         {
             return InitializeResult.Memeory_Failed;
         }
+    }
+
+    public static string SyncAOBSCAN(long start = 0, long end = long.MaxValue, string search = "", long offset = 0)
+    {
+        return AOBSCAN(start, end, search, offset).GetAwaiter().GetResult();
+    }
+
+    private static async Task<string> AOBSCAN(long start, long end, string search, long offset)
+    {
+        string result = string.Empty;
+
+        try
+        {
+            IEnumerable<long> addresses = await mem.AoBScan(start, end, search, true, true, true, false);
+            long address = addresses.FirstOrDefault();
+
+            checked
+            {
+                if (address != 0)
+                {
+                    address += offset;
+                }
+            }
+
+            result = $"{address:X}";
+        }
+        catch (InvalidOperationException ex)
+        {
+
+        }
+
+        return result;
     }
 
     #region Process
